@@ -1,0 +1,162 @@
+============================================================================
+KUNCI PERINTAH - ARSIP BANDIT (POST-TEST MODUL 1, 5 LEVEL)
+Khusus asisten praktikum. Jangan dibagikan ke peserta.
+============================================================================
+
+STUDI KASUS : Merapikan Arsip Kuliah
+STRUKTUR AKHIR YANG BENAR:
+
+    Arsip_Kuliah/
+    +-- Laporan/
+        +-- laporan_akhir.txt
+        +-- catatan_revisi.txt
+
+    (Folder Draft_Lama sudah dihapus di Level 5.)
+
+PENILAIAN:
+    Level 1 = 10 poin   (pwd, ls, cd)
+    Level 2 = 15 poin   (mkdir)
+    Level 3 = 20 poin   (touch)
+    Level 4 = 25 poin   (cp, mv)
+    Level 5 = 30 poin   (rm, rmdir, find, grep)
+    TOTAL   = 100 poin
+    Poin diberikan per level, hanya jika SEMUA tugas di level itu terpenuhi.
+    Tidak ada nilai sebagian.
+
+
+============================================================================
+A. MODE BROWSER (Mainkan_Offline.html)
+============================================================================
+Posisi awal: ~ (/home/praktikan). Isi Nama dan NPM dulu di bagian atas,
+baru terminal bisa diketik. Setiap selesai satu level, klik "Periksa misi".
+
+--- LEVEL 1 : Kenali terminal (10 poin) ---
+    pwd
+    ls
+    cd Arsip_Kuliah
+    pwd
+  Catatan: pwd dan ls pertama HARUS dijalankan di direktori awal (~),
+  sebelum cd. Kalau sudah terlanjur cd, kembali dengan: cd ~
+
+--- LEVEL 2 : Siapkan folder arsip (15 poin) ---
+  (posisi: di dalam Arsip_Kuliah)
+    mkdir Laporan
+    mkdir Draft_Lama
+    ls
+
+--- LEVEL 3 : Buat dua file (20 poin) ---
+    touch Laporan/laporan_akhir.txt
+    touch Draft_Lama/catatan_revisi.txt
+
+--- LEVEL 4 : Cadangkan dan pindahkan (25 poin) ---
+    cp Laporan/laporan_akhir.txt Draft_Lama
+    mv Draft_Lama/catatan_revisi.txt Laporan
+  Cek (opsional):
+    ls Laporan        -> laporan_akhir.txt  catatan_revisi.txt
+    ls Draft_Lama     -> laporan_akhir.txt
+
+--- LEVEL 5 : Bersihkan dan cari (30 poin) ---
+    rm Draft_Lama/laporan_akhir.txt
+    rmdir Draft_Lama
+    find . -name "laporan_akhir.txt"
+    grep praktikan /etc/passwd
+  Catatan: find di game ini wajib berformat 3 bagian:
+      find <lokasi> -name "<nama_file>"
+  Alternatif yang juga diterima: find Laporan -name "laporan_akhir.txt"
+
+
+============================================================================
+B. MODE TERMINAL LINUX SUNGGUHAN (Mode_Terminal_Linux)
+============================================================================
+Buka terminal di folder Mode_Terminal_Linux, lalu:
+
+    bash mulai.sh            (isi Nama / NPM saat diminta)
+
+Semua perintah berikutnya dijalankan dari dalam folder "arena".
+Setiap selesai satu level: bash ../cek.sh
+
+--- LEVEL 1 : Kenali direktori (10 poin) ---
+    cd arena
+    ls
+    cd Arsip_Kuliah
+    pwd                      <- CATAT hasilnya (path absolut)
+    cd ..
+    bash ../cek.sh
+  Saat diminta, ketik/tempel path hasil pwd tadi, contoh:
+    /home/namauser/Mode_Terminal_Linux/arena/Arsip_Kuliah
+
+--- LEVEL 2 : Siapkan ruang kerja (15 poin) ---
+    mkdir Arsip_Kuliah/Laporan
+    mkdir Arsip_Kuliah/Draft_Lama
+    ls Arsip_Kuliah
+    bash ../cek.sh
+
+--- LEVEL 3 : Buat file arsip (20 poin) ---
+    touch Arsip_Kuliah/Laporan/laporan_akhir.txt
+    touch Arsip_Kuliah/Draft_Lama/catatan_revisi.txt
+    bash ../cek.sh
+
+--- LEVEL 4 : Backup dan pemindahan (25 poin) ---
+    cp Arsip_Kuliah/Laporan/laporan_akhir.txt Arsip_Kuliah/Draft_Lama
+    mv Arsip_Kuliah/Draft_Lama/catatan_revisi.txt Arsip_Kuliah/Laporan
+    bash ../cek.sh
+
+--- LEVEL 5 : Bersihkan dan cari (30 poin) ---
+    rm Arsip_Kuliah/Draft_Lama/laporan_akhir.txt
+    rmdir Arsip_Kuliah/Draft_Lama
+    find Arsip_Kuliah -name "laporan_akhir.txt"
+    grep "$(id -un):" /etc/passwd
+    bash ../cek.sh
+  Lalu skrip menanyakan dua hal:
+    1) Path hasil find:
+         Arsip_Kuliah/Laporan/laporan_akhir.txt
+    2) Satu baris /etc/passwd milik username Linux peserta:
+         tempel baris PERTAMA hasil grep di atas.
+  Catatan: jika username peserta tidak ada di /etc/passwd (komputer kampus
+  dengan login terpusat), skrip otomatis mengganti syarat grep menjadi:
+         grep ARSIP_LAB ../.uji_grep.txt
+     dan jawabannya:
+         ARSIP_LAB:status_aman
+
+Setelah Level 5 lulus, skrip membuat file ../HASIL_PESERTA.txt
+(skor 100/100, nama, tanggal).
+
+
+============================================================================
+C. KESALAHAN UMUM PESERTA
+============================================================================
+1. Salah posisi folder.
+   Contoh: berada di dalam Laporan lalu mengetik
+       cp laporan_akhir.txt Draft_Lama
+   Draft_Lama BUKAN di dalam Laporan (sejajar, sama-sama di Arsip_Kuliah),
+   sehingga yang terbentuk malah FILE bernama "Draft_Lama" di Laporan.
+   Perbaikan: naik dulu (cd ..) atau pakai ../Draft_Lama.
+
+2. Mengira cp memindahkan file. cp = salin (asli tetap ada),
+   mv = pindah (asli hilang dari tempat semula).
+
+3. find tanpa -name atau tanpa ekstensi.
+   Salah : find laporan_akhir
+   Benar : find . -name "laporan_akhir.txt"
+
+4. rmdir pada folder yang belum kosong. Hapus dulu isinya dengan rm.
+
+5. Menjalankan pwd/ls Level 1 setelah sudah masuk Arsip_Kuliah
+   (mode browser). Kembali ke ~ dengan cd ~ lalu ulangi.
+
+6. Di mode terminal: menjalankan bash ../cek.sh dari luar folder arena.
+   Skrip hanya jalan jika posisi = arena.
+
+
+============================================================================
+D. CATATAN PENILAIAN
+============================================================================
+- Skor di mode browser tersimpan di browser peserta (localStorage) dan
+  bisa diubah sendiri oleh peserta. Jangan jadikan satu-satunya bukti.
+- Verifikasi sebaiknya lewat pengamatan langsung atau rekaman layar
+  proses pengerjaan, ditambah file hasil (.txt) yang diunduh peserta.
+- Mode browser dan mode terminal adalah dua sesi terpisah; skor keduanya
+  tidak saling terhubung.
+- Tombol "Ulang dari awal" di mode browser menghapus semua progres
+  termasuk Nama dan NPM.
+============================================================================
